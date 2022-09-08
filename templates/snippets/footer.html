@@ -1,0 +1,61 @@
+{% load static %}
+
+<!-- Footer Section Begin -->
+<footer class="footer" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-md-6 col-sm-7">
+                <div class="footer__about">
+                    <div class="footer__logo">
+                        <a href="./index.html"><img src="{% static 'Ecomex1/img/logo.jpg'%}" style='width: 150px; height: 100%; margin-bottom: -20px; margin-top: -15px;' alt=""></a>
+                    </div>
+                    <p>Local Brand from Vietnam - Leading for Future Fashion Trending.</p>
+                    <div class="footer__payment">
+                        <a href="#"><img src="{% static 'Ecomex1/img/payment/payment-1.png'%}" alt=""></a>
+                        <a href="#"><img src="{% static 'Ecomex1/img/payment/payment-2.png'%}" alt=""></a>
+                        <a href="#"><img src="{% static 'Ecomex1/img/payment/payment-3.png'%}" alt=""></a>
+                        <a href="#"><img src="{% static 'Ecomex1/img/payment/payment-4.png'%}" alt=""></a>
+                        <a href="#"><img src="{% static 'Ecomex1/img/payment/payment-5.png'%}" alt=""></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-3 col-sm-5">
+                <div class="footer__widget">
+                    <h6>Quick links</h6>
+                    <ul>
+                        <li><a href="{% url 'shop:shop_view' %}">Shop</a></li>
+                        <li><a href="{% url 'product:collections' %}">Collection</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-8 col-sm-8">
+                <div class="footer__newslatter">
+                    <h6>NEWSLETTER</h6>
+                    <form action="#">
+                        <input type="text" placeholder="Email">
+                        <button type="submit" class="site-btn">Subscribe</button>
+                    </form>
+                    <div class="footer__social">
+                        <a href="https://www.facebook.com/ceonhy.np"><i class="fa fa-facebook"></i></a>
+                        <a href="https://twitter.com/AvieTechy"><i class="fa fa-twitter"></i></a>
+                        <a href="https://www.linkedin.com/in/avietechy/"><i class="fa fa-linkedin"></i></a>
+                        <a href="https://github.com/AvieTechy"><i class="fa fa-github"></i></a>
+                        <a href="#"><i class="fa fa-pinterest"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                <div class="footer__copyright__text">
+                    <p>Copyright &copy; <script>document.write(new Date().getFullYear());</script> All rights reserved | Develop by <a href="https://avietechy.w3spaces.com/" target="_blank">AvieTechy</a></p>
+                </div>
+                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- Footer Section End -->

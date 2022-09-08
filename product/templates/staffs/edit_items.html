@@ -1,0 +1,349 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
+<link href="https://unpkg.com/multiple-select@1.5.2/dist/multiple-select.min.css" rel="stylesheet">
+<link href="https://unpkg.com/multiple-select@1.5.2/dist/themes/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'Ecomex2/css/dropzone/dropzone.css'%}" type="text/css">
+<style>
+.selected-seat{
+	background-color: crimson;
+  color: white;
+  border-radius: 3px 0 0 3px;
+  display: inline-block;
+  height: 26px;
+  line-height: 26px;
+  padding: 0 20px 0 23px;
+  position: relative;
+  margin: 0 10px 10px 0;
+  text-decoration: none;
+  -webkit-transition: color 0.2s;
+	}
+
+.selected-seat::before {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: inset 0 1px rgba(0, 0, 0, 0.25);
+  content: '';
+  height: 6px;
+  left: 10px;
+  position: absolute;
+  width: 6px;
+  top: 10px;
+}
+
+.selected-seat::after {
+  background: #fff;
+  border-bottom: 13px solid transparent;
+  border-left: 10px solid crimson;
+  border-top: 13px solid transparent;
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.seat {
+  background: #eee;
+  border-radius: 3px 0 0 3px;
+  color: #999;
+  display: inline-block;
+  height: 26px;
+  cursor: pointer;
+  line-height: 26px;
+  padding: 0 20px 0 23px;
+  position: relative;
+  margin: 0 10px 10px 0;
+  text-decoration: none;
+  -webkit-transition: color 0.2s;
+}
+
+.seat::before {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: inset 0 1px rgba(0, 0, 0, 0.25);
+  content: '';
+  height: 6px;
+  left: 10px;
+  position: absolute;
+  width: 6px;
+  top: 10px;
+}
+
+.seat::after {
+  background: #fff;
+  border-bottom: 13px solid transparent;
+  border-left: 10px solid #eee;
+  border-top: 13px solid transparent;
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.seat:hover {
+  background-color: crimson;
+  color: white;
+}
+
+.seat:hover::after {
+   border-left-color: crimson;
+}
+
+
+</style>
+{% endblock css %}
+{% block content %}
+    <section class="bg-light mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="card" style=" box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);  border-radius: 25px; background-size: cover;  width:1170px;">
+                    <div class="card-body">
+                        <div class="section-title" style=" text-align: center;"><h4>Add product</h4></div>
+<!--                        <form action="{% url 'product:upload_product' %}" enctype="multipart/form-data" method="POST">-->
+<!--                            {% csrf_token %}-->
+                                <div class="row">
+                                    <div class="col-lg-6 col-sm-6 col-md-6">
+                                        <div class="add_products">
+                                            <div class="section-title" >
+                                                <h4>Product Information</h4>
+                                            </div>
+                                        </div>
+                                        <form id="commentform" method="POST"  action="{% url 'product:upload_product' %}">
+                                            {% csrf_token %}
+                                        <div class="form-group">
+                                            <label class="label_form_title" for="title_product" style="float: left;">Title Product</label>
+                                            <input type="text" class="form-control" name="title" id="title_product" value="{{product.name}}">
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-4">
+                                                <label class="label_form_title" for="category" style="float: left;">Category</label>
+                                                <select id="category" class="form-control" name="category" required>
+                                                  <option value="women" selected>Top</option>
+                                                  <option value="men">Bottom</option>
+                                                    <option value="men">Outdoor</option>
+                                                    <option value="men">Accessories</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label class="label_form_title" for="prices" style="float: left;">Currency</label>
+                                                  <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                          <span class="input-group-text" id="validationTooltipUsernamePrepend">$</span>
+                                                        </div>
+
+                                                        <input type="number" step=0.01 value="{{product.price}}" class="form-control" name="prices" id="prices" placeholder="19.99" aria-describedby="validationTooltipUsernamePrepend" required>
+                                                  </div>
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label class="label_form_title" for="gender" style="float: left;">Gender</label>
+                                                <select id="gender" class="form-control" name="gender">
+                                                  <option value="women" selected>Women</option>
+                                                  <option value="men">Men</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label class="label_form_title" for="collection" style="float: left;">Collection</label>
+                                                <select id="collection" class="form-control" name="collection">
+                                                  <option value="{{coll_id}}" selected>{{coll_name}}</option>
+                                                    {% for coll in colls %}
+                                                        <option value="{{coll.id}}">{{coll.name}}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label class="label_form_title" for="brand" style="float: left;">Brand</label>
+                                                <input type="text" class="form-control" name="brand" id="brand" value="{{product.brand}}">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="label_form_title" for="detail" style="float: left;">Detail</label>
+                                            <input type="text" class="form-control" name="detail" id="detail" value="{{product.detail}}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="label_form_title" for="description" style="float: left;">Description</label>
+                                            <textarea  class="form-control" rows=4" name="description" id="description" >{{product.Description}}</textarea>
+                                        </div>
+                                            <button type="submit" class="btn-save" style="vertical-align:middle; float:right;"><span>Save</span></button>
+                                        </form>
+
+                                    </div>
+                                    <div class="col-lg-6 col-sm-6 col-md-6">
+                                        <div class="row no-gutters" >
+                                        <div class="col-4">
+                                            <div class="add_products">
+                                                <div class="section-title">
+                                                    <h4>Upload Image</h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="w-100"></div>
+                                        <div class="col-12">
+                                            <form class="dropzone dropzone-custom needsclick" action="{% url 'product:dropzone_image' %}"  id="DidDropzone" method="POST">
+                                                <div class="dz-message needsclick download-custom">
+                                                    {% csrf_token %}
+                                                    <input type="text" hidden name="pid" id="productID">
+                                                    <i class="fa fa-cloud-download" aria-hidden="true"></i>
+                                                    <h6>Overview Image</h6>
+                                                    <p><span class="note needsclick">Drop or click here to upload</span></p>
+
+                                                </div>
+                                            </form>
+                                        <button disabled hidden id="image-btn" type="submit" >Add images</button>
+                                        </div>
+                                    </div>
+                                        <br>
+                                        <form action="{% url 'product:option_select' %}"  accept-charset="UTF-8" method="POST">
+                                                          {% csrf_token %}
+                                            <input type="text" hidden name="pid" id="productID_option">
+                                             <div class="form-row">
+                                            <label class="col-sm-4 col-form-label label_form_title" >Color Options</label>
+                                            <div class="col-sm-8">
+                                            <select multiple="multiple" class="form-control" name="colors[]" id="color_select">
+                                              <option value="white" class="white">white</option>
+                                              <option value="black" class="black">black</option>
+                                              <option value="navy" class="navy">navy</option>
+                                              <option value="red" class="red">red</option>
+                                              <option value="blue" class="blue">blue</option>
+                                              <option value="yellow" class="yellow">yellow</option>
+                                              <option value="Beige" class="Beige">Beige</option>
+                                              <option value="green" class="green">green</option>
+                                              <option value="mint" class="mint">mint</option>
+                                              <option value="purple" class="purple">purple</option>
+                                              <option value="orange" class="orange">orange</option>
+                                              <option value="brown" class="brown">brown</option>
+                                            </select>
+                                            </div>
+                                            </div>
+                                        <br>
+                                        <div class="form-row">
+                                            <label class="col-sm-4 col-form-label label_form_title" >Size Options</label>
+                                            <div class="col-sm-8">
+                                                <table>
+                                                    <tbody>
+                                                    <tr><td colspan="4"><small style="color: #576F72; font-weight: bold;">Size Options for Select Clothing</small></td></tr>
+                                                    <tr>
+                                                        <td><div class="seat">S<input type="checkbox" name="sizes[]" value="S" style="display: none;"> </div></td>
+                                                        <td><div class="seat">M<input type="checkbox" name="sizes[]" value="M" style="display: none;"></div></td>
+                                                        <td><div class="seat">L<input type="checkbox" name="sizes[]" value="L" style="display: none;"></div></td>
+                                                        <td><div class="seat">XL<input type="checkbox" name="sizes[]" value="XL" style="display: none;"></div></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><div class="seat">XS<input type="checkbox" name="sizes[]" value="XS" style="display: none;"></div></td>
+                                                        <td><div class="seat">XM<input type="checkbox" name="sizes[]" value="XM" style="display: none;"></div></td>
+                                                        <td><div class="seat">XXL<input type="checkbox" name="sizes[]" value="XXL" style="display: none;"></div></td>
+                                                        <td><div class="seat">XXXL<input type="checkbox" name="sizes[]" value="XXXL" style="display: none;"></div></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><div class="seat">size.1<input type="checkbox" name="sizes[]" value="size.1" style="display: none;"></div></td>
+                                                        <td><div class="seat">size.2<input type="checkbox" name="sizes[]" value="size.2" style="display: none;"></div></td>
+                                                        <td><div class="seat">size.3<input type="checkbox" name="sizes[]" value="size.3" style="display: none;"></div></td>
+                                                        <td><div class="seat">size.4<input type="checkbox" name="sizes[]" value="size.3" style="display: none;"></div></td>
+                                                    </tr>
+                                                    <tr><td colspan="4"><small style="color: #576F72; font-weight: bold;">Size Options for Select Shoes and Slippers</small></td></tr>
+
+                                                    <tr>
+                                                        <td><div class="seat">5.5<input type="checkbox" name="size_shoes[]" value="5.5" style="display: none;"></div></td>
+                                                        <td><div class="seat">6<input type="checkbox" name="size_shoes[]" value="6" style="display: none;"></div></td>
+                                                        <td><div class="seat">6.5<input type="checkbox" name="size_shoes[]" value="6.5" style="display: none;"></div></td>
+                                                        <td><div class="seat">7<input type="checkbox" name="size_shoes[]" value="7" style="display: none;"></div></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><div class="seat">7.5<input type="checkbox" name="size_shoes[]" value="7.5" style="display: none;"></div></td>
+                                                        <td><div class="seat">8<input type="checkbox" name="size_shoes[]" value="8" style="display: none;"></div></td>
+                                                        <td><div class="seat">8.5<input type="checkbox" name="size_shoes[]" value="8.5" style="display: none;"></div></td>
+                                                        <td><div class="seat">9<input type="checkbox" name="size_shoes[]" value="9" style="display: none;"></div></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="1" style="color: #576F72; font-weight: bold;">Unit <small style="color: red;">(choose only one)</small></td>
+                                                        <td><div class="seat">UK<input type="checkbox" name="unit" value="UK" style="display: none;"></div></td>
+                                                        <td><div class="seat">US<input type="checkbox" name="unit" value="US" style="display: none;"></div></td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                            <button disabled hidden id="option-btn" type="submit">Add images</button>
+                                        </form>
+                                    </div>
+                                </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock content %}
+
+{% block js %}
+    <script src="{% static 'Ecomex2/js/dropzone/dropzone.js' %}"></script>
+    <script src="{% static 'Ecomex1/js/mydropzone.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+    <script src="https://unpkg.com/multiple-select@1.5.2/dist/multiple-select.min.js"></script>
+
+<script>
+  $(function() {
+    $('select').multipleSelect()
+  })
+</script>
+<script>
+
+$('.seat')
+.click(function () {
+	if($(this).attr("class") == "seat"){
+	    $(this).removeClass('seat');
+  		$(this).addClass('selected-seat');
+  		$(this).children().attr('checked', "checked");
+  	}
+  	else{
+  	      $(this).removeClass('selected-seat');
+  	    $(this).addClass('seat');
+  		$(this).children().prop('checked', true);
+  	}
+});
+</script>
+<script>
+
+    var temp_button_text;
+
+function CustomFormSubmitPost(e){
+    var el = $(e);
+    temp_button_text = el.text()
+    el.attr('disabled', 'disabled').text("").append('<class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>Loading...');
+};
+
+function CustomFormSubmitResponse(e){
+    var el = $(e);
+    el.removeAttr('disabled').text(temp_button_text);
+};
+        var form = $('#commentform');
+        form.submit(function(event){
+            event.preventDefault();
+            CustomFormSubmitPost($('#commentform button[type=submit]'));
+
+            var formdata = form.serialize()
+            $.ajax({
+                url: form.attr("action"),
+                method: form.attr("method"),
+                data: formdata,
+
+                 success: function(json){
+                    CustomFormSubmitResponse($('#commentform button[type=submit]'));
+                    document.getElementById("productID").value = json["ID"];
+                    document.getElementById("productID_option").value = json["ID"];
+                    $('#image-btn').removeAttr("disabled").click()
+                    $('#option-btn').removeAttr("disabled").click()
+                    alert('success')
+                },
+                error: function(xhr){
+                    alert("failed");
+                }
+            })
+
+        })
+
+</script>
+
+{% endblock js %}

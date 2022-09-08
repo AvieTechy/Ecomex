@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
+<link rel="stylesheet" href="{% static 'Ecomex2/css/dropzone/dropzone.css'%}" type="text/css">
+
+{% endblock css %}
+{% block content %}
+    <section class="bg-light mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="card" style=" box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);  border-radius: 25px; background-size: cover;  width:1170px;">
+                    <div class="card-body">
+                        <div class="section-title" style=" text-align: center;"><h4>Add Collection</h4></div>
+<!--                        <form action="{% url 'product:upload_product' %}" enctype="multipart/form-data" method="POST">-->
+<!--                            {% csrf_token %}-->
+                            <div class="row" style="padding: 30px;">
+                                <div class="col-lg-3">
+                                    <div class="row no-gutters"  style="align-items: center; justify-content: center;">
+                                        <div class="col-12" style="text-align: center;">
+                                            <div class="add_products">
+                                                <div class="section-title">
+                                                    <h4>Upload Thumbnail</h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="w-100"></div>
+                                        <div class="col-7">
+                                            <form class="dropzone dropzone-custom needsclick" style="padding: 10px; width: 156px;"  action="{% url 'product:upload_thumbnail_collection' %}"  id="DidDropzone" method="POST">
+                                                <div class="dz-message needsclick download-custom">
+                                                    {% csrf_token %}
+                                                    <input type="text" hidden name="pid" id="productID">
+                                                    <i class="fa fa-cloud-download" aria-hidden="true"></i>
+                                                    <h6>Thumbnail</h6>
+                                                </div>
+                                            </form>
+                                            <button disabled hidden id="image-btn" type="submit" >Add images</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-9">
+                                    <div class="add_products">
+                                        <div class="section-title" style="text-align: center;">
+                                            <h4>New Collection Information</h4>
+                                        </div>
+                                    </div>
+                                    <form id="commentform" method="POST"  action="{% url 'product:upload_collection' %}">
+                                        {% csrf_token %}
+                                    <div class="form-group">
+                                        <label class="label_form_title" for="title_product" style="float: left;">Title Product</label>
+                                        <input type="text" class="form-control" name="title" id="title_product" placeholder="ESSENTIAL STRUCTURED BLAZER" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="label_form_title" for="description" style="float: left;">Description</label>
+                                        <textarea  class="form-control" rows=4" name="description" id="description" placeholder="Description"></textarea>
+                                    </div>
+                                        <button type="submit" class="btn-save" style="vertical-align:middle; float:right;"><span>Save</span></button>
+                                    </form>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock content %}
+
+{% block js %}
+    <script src="{% static 'Ecomex2/js/dropzone/dropzone.js' %}"></script>
+    <script src="{% static 'Ecomex1/js/mydropzone.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+
+<script>
+
+    var temp_button_text;
+
+function CustomFormSubmitPost(e){
+    var el = $(e);
+    temp_button_text = el.text()
+    el.attr('disabled', 'disabled').text("").append('<class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>Loading...');
+};
+
+function CustomFormSubmitResponse(e){
+    var el = $(e);
+    el.removeAttr('disabled').text(temp_button_text);
+};
+        var form = $('#commentform');
+        form.submit(function(event){
+            event.preventDefault();
+            CustomFormSubmitPost($('#commentform button[type=submit]'));
+
+            var formdata = form.serialize()
+            $.ajax({
+                url: form.attr("action"),
+                method: form.attr("method"),
+                data: formdata,
+
+                 success: function(json){
+                    CustomFormSubmitResponse($('#commentform button[type=submit]'));
+                    document.getElementById("productID").value = json["ID"];
+                    $('#image-btn').removeAttr("disabled").click()
+                    alert('success')
+                },
+                error: function(xhr){
+                    alert("failed");
+                }
+            })
+
+        })
+
+</script>
+
+{% endblock js %}
