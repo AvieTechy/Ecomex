@@ -13,9 +13,12 @@ chardet==3.0.4
 constantly==15.1.0
 cryptography==37.0.4
 daphne==2.5.0
-Django==2.2.15
+dj-database-url==1.0.0
+Django==4.1.1
 django-bootstrap-static==4.2.1
 django-cropperjs==0.0.5
+django-heroku==0.3.1
+heroku==0.1.4
 hiredis==2.0.0
 hyperlink==20.0.1
 idna==2.10
@@ -28,12 +31,14 @@ optional-django==0.1.0
 packaging==20.4
 Pillow==9.2.0
 prettytable==3.4.1
+psycopg2==2.9.3
 pyasn1==0.4.8
 pyasn1-modules==0.2.8
 pycparser==2.20
 PyHamcrest==2.0.2
 pyOpenSSL==19.1.0
 pyparsing==2.4.7
+python-dateutil==1.5
 pytz==2020.1
 redis==3.5.3
 requests==2.24.0
@@ -49,5 +54,6 @@ tzdata==2022.2
 urllib3==1.25.10
 wcwidth==0.2.5
 webencodings==0.5.1
+whitenoise==6.2.0
 zipp==3.1.0
 zope.interface==5.1.0
