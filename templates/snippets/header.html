@@ -1,0 +1,250 @@
+{% load static %}
+ <div class="offcanvas-menu-overlay"></div>
+    <div class="offcanvas-menu-wrapper">
+        <div class="offcanvas__close">+</div>
+        <ul class="offcanvas__widget">
+            <li><span class="icon_search search-switch"></span></li>
+            <li><a href="#"><span class="icon_heart_alt"></span>
+                <div class="tip">0</div>
+            </a></li>
+            <li><a href="{% url 'shop:my_cart' %}"><span class="icon_bag_alt"></span>
+                <div class="tip">{{cart_cnt}}</div>
+            </a></li>
+        </ul>
+        <div class="offcanvas__logo">
+            <a href=""><img src="{% static 'Ecomex1/img/logo.jpg'%}" alt=""></a>
+        </div>
+        <div class="offcanvas__auth">
+            <div class="shop__sidebar">
+                        <div class="sidebar__categories">
+                            <div class="categories__accordion">
+                                <div class="accordion" id="accordionExample">
+                                    {%if request.user.is_staff == True %}
+                                    <div class="card">
+                                        <div class="card-heading">
+                                            <a href="{% url 'revenue:revenue_view' %}">Revenue</a>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-heading">
+                                            <a href="./shop.html">Orders</a>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-heading">
+                                            <a data-toggle="collapse" data-target="#collapseTwo">Products</a>
+                                        </div>
+                                        <div id="collapseTwo" class="collapse" data-parent="#accordionExample">
+                                            <div class="card-body">
+                                                <ul>
+                                                    <li><a class="dropdown-item" href="/products/items">Items</a></li>
+                                                    <li><a class="dropdown-item" href="{% url 'product:collections' %}">Collections</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-heading">
+                                            <a href="./shop.html">Customers</a>
+                                        </div>
+                                    </div>
+                                    {% else %}
+                                        <div class="card">
+                                        <div class="card-heading">
+                                            <a href="/">Home</a>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-heading">
+                                            <a href="{% url 'shop:shop_view' %}">Shop</a>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-heading">
+                                            <a data-toggle="collapse" data-target="#collapseTwo1">Women’s</a>
+                                        </div>
+                                        <div id="collapseTwo1" class="collapse" data-parent="#accordionExample">
+                                            <div class="card-body">
+                                                <ul>
+                                                    <li><a class="dropdown-item" href="./error404">Top</a></li>
+                                                    <li><a class="dropdown-item" href="./error404">Bottom</a></li>
+                                                    <li><a class="dropdown-item" href="./error404">Outdoor</a></li>
+                                                    <li><a class="dropdown-item" href="./error404">Accessories</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-heading">
+                                            <a data-toggle="collapse" data-target="#collapseTwo2">Men’s</a>
+                                        </div>
+                                        <div id="collapseTwo2" class="collapse" data-parent="#accordionExample">
+                                            <div class="card-body">
+                                                <ul>
+                                                    <li><a class="dropdown-item" href="./error404">Top</a></li>
+                                                    <li><a class="dropdown-item" href="./error404">Bottom</a></li>
+                                                    <li><a class="dropdown-item" href="./error404">Outdoor</a></li>
+                                                    <li><a class="dropdown-item" href="./error404">Accessories</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-heading">
+                                            <a href="{% url 'product:collections' %}">Collections</a>
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+            </div>
+        </div>
+        <div class="offcanvas__auth">
+             {% if request.user.is_authenticated %}
+                <a href="/logout">Logout</a>
+                {% if request.user.is_staff == True %}
+                <a href="/manage">Manage</a>
+                {% endif %}
+            {% else %}
+            <a href="/login">Login</a>
+            <a href="/register">Register</a>
+            {% endif %}
+        </div>
+    </div>
+    <header class="header">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xl-5 col-lg-7">
+                    <nav class="header__menu">
+                        <ul>
+                            {%if request.user.is_staff == True %}
+                                {% if status == "revenue" %}
+                                    <li class="active"><a href="{% url 'revenue:revenue_view' %}">Revenue</a></li>
+                                {% else %}
+                                    <li><a href="{% url 'revenue:revenue_view' %}">Revenue</a>
+                                {% endif %}
+
+                                {% if status == "orders" %}
+                                    <li class="active"><a href="{% url 'orders:orders_view' %}">Orders</a></li>
+                                {% else %}
+                                    <li><a href="{% url 'orders:orders_view' %}">Orders</a>
+                                {% endif %}
+
+                                {% if status == "products" %}
+                                <li class="active"><a href="#">Products</a>
+                                {% else %}
+                                    <li><a href="#">Products</a>
+                                {% endif %}
+                                    <ul class="dropdown">
+                                            <li><a class="dropdown-item" style="color: #F2D1D1" href="/products/items">Items</a></li>
+                                            <li><a class="dropdown-item" style="color: #F2D1D1" href="{% url 'product:collections' %}">Collections</a></li>
+                                    </ul>
+                                </li>
+                               {% if status == "customers" %}
+                                <li class="active"><a href="#">customers</a>
+                                {% else %}
+                                    <li><a href="#">customers</a>
+                                {% endif %}
+                            {% else %}
+                                {% if status == "home" %}
+                                <li class="active"><a href="/">Home</a></li>
+                                {% else %}
+                                <li><a href="/">Home</a></li>
+                                {% endif %}
+
+                                {% if status == "shop" %}
+                                <li class="active"><a href="{% url 'shop:shop_view' %}">Shop</a></li>
+                                {% else %}
+                                <li><a href="{% url 'shop:shop_view' %}">Shop</a></li>
+                                {% endif %}
+                            <li><a href="#">Women’s</a>
+                                <ul class="dropdown">
+                                        <li><a class="dropdown-item" style="color: #F2D1D1" href="./error404">Top</a></li>
+                                        <li><a class="dropdown-item" style="color: #F2D1D1" href="./error404">Bottom</a></li>
+                                        <li><a class="dropdown-item" style="color: #F2D1D1" href="./error404">Outdoor</a></li>
+                                        <li><a class="dropdown-item" style="color: #F2D1D1" href="./error404">Accessories</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#">Men’s</a>
+                                <ul class="dropdown">
+                                        <li><a class="dropdown-item1" style="color: #C6DCE4" href="./error404">Top</a></li>
+                                        <li><a class="dropdown-item1" style="color: #C6DCE4" href="./error404">Bottom</a></li>
+                                        <li><a class="dropdown-item1" style="color: #C6DCE4" href="./error404">Outdoor</a></li>
+                                        <li><a class="dropdown-item1" style="color: #C6DCE4" href="./error404">Accessories</a></li>
+                                </ul>
+                            </li>
+                            {% if status == "collection" %}
+                                <li class="active"><a href="{% url 'product:collections' %}">Collections</a></li>
+                                {% else %}
+                                <li><a href="{% url 'product:collections' %}">Collections</a></li>
+                                {% endif %}
+
+                            {% endif %}
+                        </ul>
+                    </nav>
+                </div>
+                <div class="col-xl-4 col-lg-2">
+                    <div class="header__logo">
+                        <a href="/"><img src="{% static 'Ecomex1/img/logo.jpg'%}" alt="" style='width: 150px; height: 100%; margin-bottom: -20px; margin-top: -15px; object-fit: contain;'></a>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="header__right">
+                        <div class="header__right__auth">
+                            {% if request.user.is_authenticated %}
+                                <a href="/logout">Logout</a>
+                                {% if request.user.is_staff == True %}
+                                    <a href="/manage">Manage</a>
+                                {% endif %}
+                            {% else %}
+                            <a href="/login">Login</a>
+                            <a href="/register">Register</a>
+                            {% endif %}
+                        </div>
+
+                        <ul class="header__right__widget">
+                            <li><span class="icon_search search-switch"></span></li>
+                            <li><a href="#"><span class="icon_heart_alt"></span>
+                                <div class="tip">0</div>
+                            </a></li>
+                            {%if request.user.is_staff == False %}
+                            <li><a href="{% url 'shop:my_cart' %}"><span class="icon_bag_alt"></span>
+                                <div class="tip">{{cart_cnt}}</div>
+                            </a></li>
+                            {% else %}
+                            <li><a href="#"><span class="icon_bag_alt"></span>
+                                <div class="tip">0</div>
+                            </a></li>
+                            {% endif %}
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+            <div class="canvas__open">
+                <i class="fa fa-bars"></i>
+            </div>
+        </div>
+    </header>
+    <!-- Header Section End -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

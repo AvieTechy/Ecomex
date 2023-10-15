@@ -1,0 +1,184 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block css %}
+{% endblock css %}
+
+{% block content %}
+<section class="product-details spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                   {% if messages %}
+                {% for message in messages %}
+                    {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+                        <div class="alert alert-danger alert-dismissible fade show" style="text-align: center;" role="alert">
+                      <strong>{{message.tags}}:</strong> {{message}}
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    {% else %}
+                        <div class="alert alert-{{message.tags}} alert-dismissible fade show" style="text-align: center;" role="alert">
+                      <strong>{{message.tags}}:</strong> {{message}}
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+                </div>
+                <div class="col-lg-6">
+                    <div class="product__details__pic">
+                        <div class="product__details__pic__left product__thumb nice-scroll">
+                            {% for img in images %}
+                            <a class="pt active" href="#product-{{img.id}}">
+                                <img src="{{img.product_image.url}}" alt="">
+                            </a>
+                            {% endfor %}
+                        </div>
+                        <div class="product__details__slider__content">
+                            <div class="product__details__pic__slider owl-carousel">
+                                {% for img in images %}
+                                <img data-hash="product-{{img.id}}" class="product__big__img" src="{{img.product_image.url}}" alt="">
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+
+                    <div class="product__details__text">
+                        <h3>{{product.name}} <span>Brand: {{product.brand}}</span></h3>
+                        <div class="rating">
+                            {% for star in rate %}
+                            <i class="fa fa-star"></i>
+                            {% endfor %}
+                            {% for star in orate %}
+                            <i class="icon_star_alt"></i>
+                            {% endfor %}
+                            {% if product.rate == 0 %}
+                            <span>( No review yet! )</span>
+                            {%else%}
+                            <span>( 138 reviews )</span>
+                            {% endif %}
+                        </div>
+                        <div class="product__details__price">$ {{product.price}}</div>
+                        <p>{{product.detail}}</p>
+                        <form action="{% url 'shop:add_order' %}" method="POST">
+                            {% csrf_token %}
+                            <input type="text" hidden name="pro_id" value="{{ID}}">
+                            <div class="product__details__button">
+                                <div class="quantity">
+                                    <span>Quantity:</span>
+                                    <div class="pro-qty">
+                                        <input type="text" name="qty" value="0" id="qty">
+                                    </div>
+                                </div>
+                                <button type="submit" class="cart-btn" style="border"><span class="icon_bag_alt"></span> Add to cart</button>
+                                <ul>
+                                    <li><a href="#"><span class="icon_heart_alt"></span></a></li>
+                                    <li><a href="#"><span class="icon_adjust-horiz"></span></a></li>
+                                </ul>
+                            </div>
+                            <div class="product__details__widget">
+                                <ul>
+                                    <li>
+                                        <span>Availability:</span>
+                                        <div class="stock__checkbox">
+                                            {% if product.Availability == True %}
+                                            In Stock <i class="fa fa-cart-plus"></i>
+                                            {% else %}
+                                            Out of Stock <i class="icon_minus_alt"></i>
+                                            {% endif %}
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <span>Available color:</span>
+                                        <div class="color__checkbox">
+                                            {% for color in colors %}
+                                            <label for="{{color.name}}">
+                                                <input type="radio" name="color_choice" value="{{color.name}}" id="{{color.name}}">
+                                                <span class="checkmark {{color.name}}-bg"></span>
+                                            </label>
+                                            {% endfor %}
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <span>Available size:</span>
+                                        <div class="size__btn">
+                                            {% for size in sizes %}
+                                            <label for="{{size.name_size}}-btn" class="badge badge-light" style="font-weight: bold;">
+                                                <input type="radio" name="size" value="{{size.name_size}}" id="{{size.name_size}}-btn">
+                                                {{size.name_size}}
+                                            </label>
+                                            {% endfor %}
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="product__details__tab">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab">Description</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="tabs-1" role="tabpanel">
+                                <h6>Description</h6>
+                                <p>{{product.Description}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="related__title">
+                        <h5>RELATED PRODUCTS</h5>
+                    </div>
+                </div>
+                {% for rel in related %}
+                {% if rel != product %}
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="product__item">
+                        <div class="product__item__pic set-bg" data-setbg="{{urls|get_item:rel}}">
+                            <div class="label new">New</div>
+                            <ul class="product__hover">
+                                <li><a href="{{urls|get_item:rel}}" class="image-popup"><span class="arrow_expand"></span></a></li>
+                                <li><a href="#"><span class="icon_heart_alt"></span></a></li>
+                                <li><a href="#"><span class="icon_bag_alt"></span></a></li>
+                            </ul>
+                        </div>
+                        <div class="product__item__text">
+                            <h6><a href="#">{{rel.name}}</a></h6>
+                            <div class="rating">
+                                {% for star in rate_rel|get_item:rel %}
+                                <i class="fa fa-star"></i>
+                                {% endfor %}
+                                {% for star in orate_rel|get_item:rel %}
+                                <i class="icon_star_alt"></i>
+                                {% endfor %}
+                            </div>
+                            <div class="product__price">$ {{rel.price}}</div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+
+{% endblock content %}
+
+{% block js %}
+<script>
+
+</script>
+{% endblock js %}

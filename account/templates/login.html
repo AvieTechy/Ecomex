@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'Ecomex1/css/form.css'%}" type="text/css">
+{% endblock css %}
+{% block content %}
+
+<div class="container-fluid">
+	<div class="row justify-content-center">
+		    <section class="contact spad">
+                <div class="container">
+                    <div class="row">
+                        <div class="justify-content-center">
+                           <div class="card" style=" box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);  border-radius: 25px; text-align: center; background-image: url('{% static 'Ecomex1/img/categories/login.jpg' %}'); background-size: cover; height:590px; width:1170px;">
+                               <div class="card-body">
+                                   <section class="contact spad">
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="col-lg-7 col-md-6">
+                                                        <div class="col-8">
+                                                        {% if messages %}
+                                                            {% for message in messages %}
+                                                                {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
+                                                               <div class="alert alert-warning alert-dismissible fade show" style="text-align: center;" role="alert">
+                                                                  <strong>WARNING!</strong> {{message}}
+                                                                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                  </button>
+                                                                </div>
+                                                            {% endfor %}
+                                                        {% endif %}
+                                                            </div>
+                                                    </div>
+                                                    <div class="col-lg-5 col-md-6">
+                                                        <div class="contact__content">
+                                                            <div class="contact__form" style=" margin-left: auto; margin-right: 0; margin-top: 70px;">
+                                                                <br>
+                                                                <form role="form" class="form-signin" method="post">{% csrf_token %}
+                                                                    <div class="input-container ic2">
+                                                                        <input id="email" name="email" class="input" type="email" placeholder=" " />
+                                                                        <div class="cut cut-short"></div>
+                                                                          <label for="email" class="placeholder">Email</label>
+                                                                    </div>
+                                                                    <div class="input-container ic2">
+                                                                        <input id="password" name="password" class="input" type="password" placeholder=" " />
+                                                                        <div class="cut"></div>
+                                                                        <label for="password" class="placeholder">Password</label>
+                                                                    </div>
+                                                                    {% for field in login_form %}
+                                                                        <p>
+                                                                        {% for error in field.errors %}
+                                                                        <p style="color: red">{{ error }}</p>
+                                                                        {% endfor %}
+
+                                                                        {% endfor %}
+                                                                        {% if login_form.non_field_errors %}
+                                                                        <div style="color: red">
+                                                                        <p>{{login_form.non_field_errors}}</p>
+                                                                        </div>
+
+                                                                        {% endif %}
+                                                                    <br>
+                                                                    <div class="float-right">
+                                                                        <button type="submit" class="submit">submit</button>
+                                                                    </div>
+                                                                </form>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                   </section>
+                               </div>
+                           </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+    </div>
+</div>
+
+
+
+
+
+
+
+{% endblock content %}

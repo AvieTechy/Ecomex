@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+	{% load static %}
+    <meta charset="UTF-8">
+    <meta name="description" content="Ashion Template">
+    <meta name="keywords" content="Ashion, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Acomex | Future Fashion Choices</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Cookie&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+
+    <!-- Css Styles -->
+
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'Ecomex1/css/bootstrap.min.css'%}" type="text/css">
+    <link rel="stylesheet" href="{% static 'Ecomex1/css/font-awesome.min.css'%}" type="text/css">
+    <link rel="stylesheet" href="{% static 'Ecomex1/css/elegant-icons.css'%}" type="text/css">
+    <link rel="stylesheet" href="{% static 'Ecomex1/css/jquery-ui.min.css'%}" type="text/css">
+    <link rel="stylesheet" href="{% static 'Ecomex1/css/magnific-popup.css'%}" type="text/css">
+    <link rel="stylesheet" href="{% static 'Ecomex1/css/owl.carousel.min.css'%}" type="text/css">
+    <link rel="stylesheet" href="{% static 'Ecomex1/css/slicknav.min.css'%}" type="text/css">
+    <link rel="stylesheet" href="{% static 'Ecomex1/css/style.css'%}" type="text/css">
+    <link rel="stylesheet" href="{% static 'Ecomex1/css/dropdown.css'%}" type="text/css">
+
+    <link rel="stylesheet" href="{% static 'Ecomex1/css/errors.css'%}" type="text/css">
+    {%block css%}
+    {%endblock css%}
+    <style>
+        .navbar-nav > li > .dropdown-menu a:link,
+.navbar-nav > li > .dropdown-menu a:hover { background-color: #FF0000;}
+    </style>
+</head>
+
+<body>
+    <!-- Page Preloder -->
+
+    <!-- Offcanvas Menu Begin -->
+
+
+
+    <!-- Offcanvas Menu End -->
+
+    <!-- Header Section Begin -->
+        {% include 'snippets/header.html' %}
+    <!-- Header Section End -->
+
+    <!-- Main Section Begin -->
+        {% block content %}
+
+        {% endblock content %}
+    <!-- Main Section End -->
+<div class="instagram">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-2 col-md-4 col-sm-4 p-0">
+                <div class="instagram__item set-bg" data-setbg="{% static 'Ecomex1/img/instagram/insta-1.jpg' %}">
+                    <div class="instagram__text">
+                        <i class="fa fa-instagram"></i>
+                        <a href="#">@ ashion_shop</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-4 col-sm-4 p-0">
+                <div class="instagram__item set-bg" data-setbg="{% static 'Ecomex1/img/instagram/insta-2.jpg' %}">
+                    <div class="instagram__text">
+                        <i class="fa fa-instagram"></i>
+                        <a href="#">@ ashion_shop</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-4 col-sm-4 p-0">
+                <div class="instagram__item set-bg" data-setbg="{% static 'Ecomex1/img/instagram/insta-3.jpg' %}">
+                    <div class="instagram__text">
+                        <i class="fa fa-instagram"></i>
+                        <a href="#">@ ashion_shop</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-4 col-sm-4 p-0">
+                <div class="instagram__item set-bg" data-setbg="{% static 'Ecomex1/img/instagram/insta-4.jpg' %}">
+                    <div class="instagram__text">
+                        <i class="fa fa-instagram"></i>
+                        <a href="#">@ ashion_shop</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-4 col-sm-4 p-0">
+                <div class="instagram__item set-bg" data-setbg="{% static 'Ecomex1/img/instagram/insta-5.jpg' %}">
+                    <div class="instagram__text">
+                        <i class="fa fa-instagram"></i>
+                        <a href="#">@ ashion_shop</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-4 col-sm-4 p-0">
+                <div class="instagram__item set-bg" data-setbg="{% static 'Ecomex1/img/instagram/insta-6.jpg' %}">
+                    <div class="instagram__text">
+                        <i class="fa fa-instagram"></i>
+                        <a href="#">@ ecomex_shop</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <!-- Footer Section Begin -->
+        {% include 'snippets/footer.html' %}
+    <!-- Footer Section End -->
+
+    <!-- Search Begin -->
+    <div class="search-model">
+        <div class="h-100 d-flex align-items-center justify-content-center">
+            <div class="search-close-switch">+</div>
+            <form class="search-model-form">
+                <input type="text" placeholder="Search here.....">
+            </form>
+        </div>
+    </div>
+    <!-- Search End -->
+     <div id="preloder">
+        <div class="loader" role="status"></div>
+        <span class="sr-only">Loading...</span>
+    </div>
+    <!-- Js Plugins -->
+    <script src="{% static 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js'%}"></script>
+    <script src="{% static 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'%}"></script>
+    <script src="{% static 'Ecomex1/js/jquery-3.3.1.min.js'%}"></script>
+    <script src="{% static 'Ecomex1/js/bootstrap.min.js'%}"></script>
+    <script src="{% static 'Ecomex1/js/jquery.magnific-popup.min.js'%}"></script>
+    <script src="{% static 'Ecomex1/js/jquery-ui.min.js'%}"></script>
+    <script src="{% static 'Ecomex1/js/mixitup.min.js'%}"></script>
+    <script src="{% static 'Ecomex1/js/jquery.countdown.min.js'%}"></script>
+    <script src="{% static 'Ecomex1/js/jquery.slicknav.js'%}"></script>
+    <script src="{% static 'Ecomex1/js/owl.carousel.min.js'%}"></script>
+    <script src="{% static 'Ecomex1/js/jquery.nicescroll.min.js'%}"></script>
+    <script src="{% static 'Ecomex1/js/main.js'%}"></script>
+
+    <script src="https://unpkg.com/bootstrap-table@1.21.0/dist/bootstrap-table.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.21.0/dist/extensions/multiple-sort/bootstrap-table-multiple-sort.js"></script>
+{% block js %}
+{% endblock js %}
+</body>

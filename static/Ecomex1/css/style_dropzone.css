@@ -1,0 +1,17 @@
+
+.dz {
+    width: 155px;
+    min-height: 150px;
+  background: white;
+  border-style: dashed;
+  border-color: #73A9AD;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 20px;
+  padding: 10px;
+  align-items: center;
+  justify-content: center;
+}
+
+.dz:hover {
+    background-color: #F3F1F5 !important;
+}

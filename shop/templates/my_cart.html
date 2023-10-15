@@ -1,0 +1,164 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+
+{% endblock css %}
+
+{% block content %}
+<section class="shop-cart spad" xmlns="http://www.w3.org/1999/html">
+        <div class="container">
+            <form action="{% url 'shop:update_cart' %}" method="POST">
+                {% csrf_token %}
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="shop__cart__table">
+                        {% if messages %}
+                        {% for message in messages %}
+                            {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+                                <div class="alert alert-danger alert-dismissible fade show" style="text-align: center;" role="alert">
+                              <strong>{{message.tags}}:</strong> {{message}}
+                              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            {% else %}
+                                <div class="alert alert-{{message.tags}} alert-dismissible fade show" style="text-align: center;" role="alert">
+                              <strong>{{message.tags}}:</strong> {{message}}
+                              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            {% endif %}
+
+                        {% endfor %}
+                    {% endif %}
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Color</th>
+                                    <th>Price</th>
+                                    <th>Quantity</th>
+                                    <th>Total</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for order in orders %}
+                                <tr>
+                                    <td class="cart__product__item">
+                                        <img src="{{thumbs|get_item:order}}" style="border: 1px solid #ddd; border-radius: 4px; padding: 5px; width: 120px; height: 120px;" alt="">
+                                        <div class="cart__product__item__title">
+                                            <h6>{{order.items.name}}</h6>
+                                            <div class="rating">
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                            </div>
+                                        </div>
+                                    </td>
+
+                                    <td  class="cart__color"><div class="preview {{order.color}}"></div></td>
+
+                                    <td class="cart__price">$<span id="price{{order.id}}"> {{order.items.price}}</span></td>
+                                    <td class="cart__quantity">
+                                        <div class="pro-qty" id="qty">
+                                            <input type="text"  value="{{order.quantity}}" name="{{order.id}}" id="input">
+                                        </div>
+                                    </td>
+                                    <td class="cart__total">$ <span id="total">{{total|get_item:order}}</span></td>
+                                    <td class="cart__close"><span class="icon_close"><input type="checkbox" value="{{order.id}}" name="removes[]" style="display: None;"></span>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div class="cart__btn">
+                        <a href="{% url 'shop:shop_view' %}">Continue Shopping</a>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div class="cart__btn update__btn">
+                        <button type="submit"><span class="icon_loading"></span> Update cart</button>
+                    </div>
+                </div>
+            </div>
+            </form>
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="col-lg-10">
+                        <div class="discount__content">
+                            <h6>Discount codes</h6>
+                            <form action="#">
+                                <input type="text" placeholder="Enter your coupon code">
+                                <button type="submit" class="site-btn">Apply</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="table_title">
+                            <h6><span>Your Bill</span></h6>
+                        </div>
+                        <table class="table" style="text-align:center;">
+                      <thead class="thead-light">
+                        <tr>
+                          <th scope="col">#</th>
+                          <th scope="col">ID</th>
+                          <th scope="col">Name</th>
+                          <th scope="col">Subtotal</th>
+                          <th scope="col">Date/Time</th>
+                            <th scope="col">Status</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      {% for pend in pends %}
+                        <tr>
+
+                            <td>{{cnt|get_item:pend}}</td>
+                            <td>#{{pend.id}}</td>
+                            <td style="font-weight: bold;">{{pend.cart.items.name}}</td>
+                            <td style="color: crimson;">${{pend.subtotal}}</td>
+                            <td>{{pend.date}}</td>
+                            <td><div class="custom_badge_{{pend.status_order}}">{{pend.status_order}}</div> </td>
+
+                        </tr>
+                      {% endfor %}
+                      </tbody>
+                    </table>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="cart__total__procced">
+                        <h6>Cart total</h6>
+                        <ul>
+                            <li>Subtotal <span>$ {{subtotal}}</span></li>
+                            <li>Total <span>$ {{subtotal}}</span></li>
+                        </ul>
+                        <a href="{% url 'shop:checkout' %}" class="primary-btn">Proceed to checkout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock content %}
+
+{% block js %}
+<script>
+
+$('.icon_close')
+.click(function () {
+    if($(this).attr("class") == "icon_close"){
+    $(this).closest('tr').remove()
+    }
+})
+</script>
+{% endblock js %}

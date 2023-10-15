@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block css %}
+{% endblock css %}
+
+{% block content %}
+<section class="bg-light mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12" style="text-align: center;">
+                    <div class="collections" >
+                            <div class="section-title">
+                                <h4>Collections</h4>
+                            </div>
+                    </div>
+                </div>
+                    {% if coll_cnt == 0 %}
+                    <div class="row">
+                        {% if request.user.is_staff == True %}
+                        <div class="col-lg-10">
+                            <h6 class="coupon__link" style="border-radius:5px;"><span><i class="fa fa-bullhorn" aria-hidden="true"></i></span> There is not any collection now! </h6>
+                        </div>
+                        <div class="col-lg-2">
+                             <a href="{% url 'product:add_collection' %}">
+                                <button class="btn-add" style="float: right;">
+                                    <span><i class="fa fa-plus"></i></span> COLLECTION
+                                </button>
+                             </a>
+                        </div>
+                    </div>
+                    {% else %}
+                <div class="col-lg-12">
+                            <h6 class="coupon__link" style="border-radius:5px;"><span><i class="fa fa-bullhorn" aria-hidden="true"></i></span> There is not any collection now! </h6>
+                        </div>
+                    {% endif %}
+                    {% else %}
+                    <div class="row" style >
+                        {% if request.user.is_staff == True %}
+                        <div class="col-10" style="border-radius:5px; float: center;">
+                            <h6 class="coupon__link"><span><i class="fa fa-bullhorn" aria-hidden="true"></i></span> You have {{coll_cnt}} collections here! </h6>
+                        </div>
+                        <div class="col-2" style="position: absolute;  right:50px">
+                             <a href="{% url 'product:add_collection' %}">
+                                <button class="btn-add">
+                                    <span><i class="fa fa-plus"></i></span> COLLECTION
+                                </button>
+                             </a>
+                        </div>
+                        {% else %}
+                        <div class="col-12" style="border-radius:5px; float: center;">
+                            <h6 class="coupon__link"><span><i class="fa fa-bullhorn" aria-hidden="true"></i></span> You have {{coll_cnt}} collections here! </h6>
+                        </div>
+                        {% endif %}
+                        {% for coll in colls %}
+                        <div class="col-lg-4 col-md-4 col-sm-6">
+                            <div class="blog__item">
+                                <div class="blog__item__pic set-bg" style="border-radius:10px;" data-setbg="{{coll.Thumbnail.url}}"></div>
+                                <div class="blog__item__text" style="border-radius:10px; padding:20px;">
+                                    <h6><a href="{% url 'product:collection_details' coll.id  %}">{{coll.name}}</a></h6>
+                                    <ul>
+                                        <li>by <span>Ecomex Team</span></li>
+                                        <li>{{coll.start_date}}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    </div>
+
+
+                    {% endif %}
+
+            </div>
+        </div>
+</section>
+
+
+{% endblock content %}
+
+{% block js %}
+{% endblock js %}
